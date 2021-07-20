@@ -1,6 +1,13 @@
 $(function () {
+// importar el main.html
+//  EMOJIS
+   import {EmojiButton} from '@joeattardi/emoji-button';
+   const picker = new EmojiButton({
+     position : 'right-start' //..........
+   });
+   const trigger = document.querySelector('#mensaje');
 
-    // socket.io client side connection
+  // socket.io client side connection
     const socket = io.connect();
 
     // obtaining DOM elements from the Chat Interface
@@ -15,7 +22,16 @@ $(function () {
 
     // obtaining the usernames container DOM
     const $users = $('#usernames');
+    //EMOJIS
+    picker.on('emoji', selection => {
+      trigger.innerHTML = selection.emoji;
+      input.value += emoji;
+    
+    });
+    
+    trigger.addEventListener('click', () => picker.togglePicker(trigger));
 
+    // DIN EMOJIS
     $nickForm.submit(e => {
       e.preventDefault();
       socket.emit('new user', $nickname.val(), data => {
